@@ -1,10 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
+import { Outlet } from "react-router-dom";
+import { FormNavbar } from "./FormNavbar/FormNavbar";
+import { routes } from "./router/routes";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [page, setPage] = useState(0);
+  const navigate = useNavigate();
+  const location = useLocation();
+  useEffect(() => {
+    navigate(routes[page]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
   return (
     <>
@@ -19,35 +29,18 @@ function App() {
       </div>
       <h1>insurance-form</h1>
       <div className="card">
-        <div className="card flex-column gap">
-          <h2>Dane właścicieli:</h2>
-          <label className="input">
-            Imię:
-            <input type="text" />
-          </label>
-          <label className="input">
-            Nazwisko:
-            <input type="text" />
-          </label>
-          <label className="input">
-            PESEL:
-            <input type="text" />
-          </label>
-          <label className="input">
-            Ulica:
-            <input type="text" />
-          </label>
-          <label className="input">
-            Kod-pocztowy:
-            <input type="text" />
-          </label>
-          <label className="input-between">
-            Współwłaściciel ?:
-            <input type="checkbox" />
-          </label>
+        <FormNavbar />
+        <Outlet />
+        <div className="buttonGroup">
+          <button
+            onClick={() => {
+              page !== 0 && setPage(routes.indexOf(location.pathname) - 1);
+            }}
+          >
+            {"<"}
+          </button>
+          <button onClick={() => page !== routes.length - 1 && setPage(routes.indexOf(location.pathname) + 1)}>{">"}</button>
         </div>
-        <button onClick={() => setCount((count) => count + 1)}>Poprzedni</button>
-        <button onClick={() => setCount((count) => count + 1)}>Następny</button>
         <p>
           <code>2023 insurance-form</code>
         </p>

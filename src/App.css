@@ -36,6 +36,7 @@
 .card {
   padding: 2em;
   border: 1px solid white;
+  min-height: 250px;
 }
 
 .read-the-docs {
@@ -58,4 +59,10 @@
 }
 .gap {
   gap: 10px;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 50px;
 }
